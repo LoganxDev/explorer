@@ -16,7 +16,6 @@ import Icon from '@material-ui/core/Icon';
 import MyCommaAuth from '@commaai/my-comma-auth';
 
 import TimeFilter from './TimeFilter';
-import TimeDisplay from '../TimeDisplay';
 import { AccountIcon } from '../../icons';
 
 const styles = (theme) => ({
@@ -41,9 +40,6 @@ const styles = (theme) => ({
     fontFamily: 'MaisonNeueExtended',
     fontSize: 18,
     fontWeight: 600,
-  },
-  timeDisplay: {
-    alignItems: 'center',
   },
   selectArea: {
     alignItems: 'center',
@@ -131,9 +127,6 @@ class AppHeader extends Component {
                 explorer
               </Typography>
             </Link>
-          </Grid>
-          <Grid item container xs={6} lg={4} className={classes.timeDisplay}>
-            <TimeDisplay isThin />
           </Grid>
           <Grid
             item

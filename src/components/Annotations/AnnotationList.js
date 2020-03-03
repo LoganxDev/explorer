@@ -18,7 +18,8 @@ const styles = (theme) => ({
   base: {
     border: '1px solid rgba(255,255,255,0.04)',
     borderRadius: 5,
-    overflow: 'hidden'
+    height: 600,
+    width: '100%',
   }
 });
 
@@ -46,11 +47,12 @@ class AnnotationList extends PureComponent {
 
   filter = memoize((resolved, unresolved, list) => list.filter(this.filterEntry));
 
-  recomputeList = () => {
-    if (this.list) {
-      this.list.recomputeRowHeights();
-      this.list.forceUpdateGrid();
-    }
+  getEvent(index) {
+    const { segment } = this.props;
+    const events = (segment || {}).events || [];
+    const filteredList = this.filter(this.props.resolved, this.props.unresolved, events);
+
+    return filteredList[index];
   }
 
   handleExpanded = (eventId, timestamp) => {
@@ -76,12 +78,11 @@ class AnnotationList extends PureComponent {
     }
   }
 
-  getEvent(index) {
-    const { segment } = this.props;
-    const events = (segment || {}).events || [];
-    const filteredList = this.filter(this.props.resolved, this.props.unresolved, events);
-
-    return filteredList[index];
+  recomputeList = () => {
+    if (this.list) {
+      this.list.recomputeRowHeights();
+      this.list.forceUpdateGrid();
+    }
   }
 
   getRowHeight = ({ index }) => {
@@ -129,7 +130,7 @@ class AnnotationList extends PureComponent {
     const events = (segment || {}).events || [];
 
     return (
-      <div className={classes.base} style={{ height: '100%' }}>
+      <div className={classes.base}>
         <AutoSizer>
           {({ height, width }) => (
             <List
